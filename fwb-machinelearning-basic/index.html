@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <meta name="author" content="fkemps@fortinet.com">
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Demo - Anomaly Detection - FortiWeb Machine Learning</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../css/theme.css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Demo - Anomaly Detection";
+    var mkdocs_page_input_path = "fwb-machinelearning-basic.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> FortiWeb Machine Learning</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="..">Introduction</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../fwb-machinelearning-refresh/">Info - Machine Learning</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../setup/">Preparation (mandatory)</a>
+                    </li>
+                </ul>
+                <ul class="current">
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Demo - Anomaly Detection</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#1-demo-scope">1. Demo Scope</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#2-prerequisite">2. Prerequisite</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#3-launching-attack">3. Launching Attack</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#31-normal-registration">3.1 Normal registration</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#32-registration-with-xss">3.2 Registration with XSS</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#33-registration-with-zero-day">3.3 Registration with Zero-day</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#4-enable-ml-anomaly-detection">4. Enable ML - Anomaly Detection</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#5-attack-finance-bank-website">5. Attack Finance Bank website</a>
+    </li>
+    </ul>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../fwb-machinelearning-bot-basic/">Demo - Bot Detection</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../fwb-machinelearning-advanced/">Lab - Anomaly Detection</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../fwb-machinelearning-api/">Lab - API Protection</a>
+                    </li>
+                </ul>
+      </div>
+      <div class="navcenterfabric">
+        <img src="../img/fabric-small.png">
+      </div>
+      <div class="navcenter">
+        <img src="../img/fortinetlogonav.png">
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">FortiWeb Machine Learning</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Demo - Anomaly Detection</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h2 id="demo-anomaly-detection">Demo Anomaly Detection</h2>
+<h3 id="1-demo-scope">1. Demo Scope</h3>
+<ol>
+<li>User registration </li>
+<li>User performs attacks (zero-day = False Negative)</li>
+<li>User performs attacks with Machine Learning active (All blocked)</li>
+</ol>
+<p>The user  registers on the financial website. <br />
+During registration he performs some attacks like <strong>Cross Site Scripting</strong>, <strong>Command Injection</strong> and <strong>SQLinjection</strong>.
+The Cross Site Scripting attack is blocked by signatures protection, but both the <strong>Command</strong> and <strong>SQLinjections</strong> (zero-day type attacks) go unnoticed because there are no matching signatures.
+Those two requests should have been blocked (False Negative).</p>
+<p>After enabling and training <strong>Machine Learning - Anomaly Detection</strong> the zero-day attacks are blocked and recorded in the Attack-Log.</p>
+<h6 style="color:blue;">NOTE: You can copy & past the attack samples from the file "AttackSamples.txt" on the Lubuntu desktop</h6>
+<hr />
+<h3 id="2-prerequisite">2. Prerequisite</h3>
+<p>If you have done ML-Bot detection demo please have the bot detection action set to <strong>alert</strong>. <br />
+(Machine Learning &gt; Bot Detection &gt; Finance &gt; Action Settings &gt; Action = Alert)</p>
+<hr />
+<h3 id="3-launching-attack">3. Launching Attack</h3>
+<p>First attack the Finance Bank website with an attack that is protected by the old-fashioned and False Positive/False Negative (FP/FN) error prone signature based protection.</p>
+<p>Browse to <strong><em>http://finance.fortinet.demo/fwb/index.html</em></strong> on the Lubuntu client.</p>
+<p>In the next steps you will do the following registrations to demonstrate:</p>
+<ol>
+<li>Normal registration</li>
+<li>Attack with <strong>Cross Site Scripting (XSS) attack</strong> blocked by WAF signature</li>
+<li>Attack with <strong>“zero day” command</strong> injection bypassing WAF signatures (FN)</li>
+<li>Attack with <strong>“zero day” SQLinjection</strong> bypassing WAF signatures (FN)</li>
+</ol>
+<p>NOTE: You can cut &amp; past the attack patterns from the <h7 style="color:blue;">AttacksSamples.txt</h7> file located on the Lubuntu Desktop.</p>
+<h4 id="31-normal-registration">3.1 Normal registration</h4>
+<p><img alt="" src="../img/fwb-ws-ml-basic-normal-reg.png" /></p>
+<h4 id="32-registration-with-xss">3.2 Registration with XSS</h4>
+<p>Registration with Cross Site Scripting attack -  Blocked by WAF signature</p>
+<p><img alt="" src="../img/fwb-ws-ml-basic-xss-reg.png" /></p>
+<p><img alt="" src="../img/fwb-ws-ml-xssblock.png" /></p>
+<h4 id="33-registration-with-zero-day">3.3 Registration with Zero-day</h4>
+<p>Registration with “zero day” remote exploite - Bypassing WAF signatures</p>
+<p><img alt="" src="../img/fwb-ws-ml-basic-ci-reg.png" /></p>
+<p>Registration with “zero day” SQLinjection - Bypassing WAF signatures</p>
+<p><img alt="" src="../img/fwb-ws-ml-basic-sqli-reg.png" /></p>
+<p>Withough Machine Learning FortiWeb only blocked the Cross Site Scripting attack, both “zero day” attacks passed through unnoticed (FN).</p>
+<p><img alt="" src="../img/fwb-ws-ml-basic-attacklog.png" /></p>
+<hr />
+<h3 id="4-enable-ml-anomaly-detection">4. Enable ML - Anomaly Detection</h3>
+<p>In order to have "Machine Learing - Anomaly Detection" protecting the finance website it needs to learn normal traffic.</p>
+<ul>
+<li>Login to FortiWeb</li>
+<li>Browse to Machine Learning &gt; Anomaly Detection</li>
+<li>Double click on <strong>Finance</strong> Server Policy</li>
+<li>Edit pre-configured <strong>finance.fortinet.demo</strong> domain via hamburger menu icon.</li>
+</ul>
+<p><img alt="" src="../img/fwb-ws-ml-basic-ML-policy.png" /></p>
+<p><img alt="" src="../img/fwb-ws-ml-basic-ML-setting.png" /></p>
+<p><img alt="" src="../img/fwb-ws-ml-basic-ML-overview.png" /></p>
+<p>This will provide the ML-AD <strong>overview</strong>, <strong>Tree View</strong> and <strong>Parameter View</strong> info tabs.</p>
+<ul>
+<li>Open the <strong>Tree View</strong> </li>
+</ul>
+<p><img alt="" src="../img/fwb-ws-ml-basic-emptytreeview.png" /></p>
+<p>To start the learning process for building the ML mathematical model (HMM), we need to generate web traffic. The requests will trigger the learning process.</p>
+<p>Web requests can be generated with the <code>FortiDemo-ML-AD-traffic.sh</code> script on the Lubuntu Client.</p>
+<ul>
+<li>Open a terminal on Lubuntu client </li>
+<li>Start Menu &gt; System Tools &gt; QTerminal</li>
+<li>Start web request script</li>
+</ul>
+<p><code>./FortiDemo-ML-AD-traffic.sh</code></p>
+<p><img alt="" src="../img/fwb-ws-ml-basic-traffic-gen.png" /></p>
+<ul>
+<li>Enter Choice: <code>1</code></li>
+</ul>
+<p>Web requests will be send to the finance website and progress is shown for each 100 web requests.</p>
+<pre><code>------------------------------------------------------------------------------
+       FortiDemo Machine Learning Anomaly Detection request generator
+ ------------------------------------------------------------------------------
+
+  1 - 3.000 POST requests - normal field input (learn)
+  2 - 3.000 POST requests - random field input (relearn)
+  3 -     1 POST request  - XSS on Lastname field (known attack - Signatures)
+  4 -     1 POST request  - Exploit on Lastname field (zero day command-injection attack - Machine Learning)
+  5 -     1 POST request  - Exploit on City field (zero day SQLi attack - Machine Learning)
+
+  9 -     Custom request  - Send custom request method, count, data, parameter etc
+
+  q - Exit
+
+Enter choice [ 1 - 9] 1
+
+Started: Fri May 15 01:39:02 UTC 2020
+Requests : 100 200                                                                                                                                                                                                                                                                                                                                                             
+
+</code></pre>
+<p>On the <strong>Tree View</strong> you can observe the “Collecting – Building – Running” learning stages by using the embeded <em>Refresh</em> button. <br />
+When all parameters are in the Running stage the finance website is protected by Machine Learning – Anomaly Detection.</p>
+<p><img alt="" src="../img/fwb-ws-ml-basic-ML-treeview.png" /></p>
+<p>After a few request samples (400) a mathematical model is build and switched into running mode on a parameter by parameter basis. <br />
+In the background learning will continue to strengthen the model as part of deep learning.</p>
+<p><img alt="" src="../img/fwb-ws-ml-basic-running.png" /></p>
+<ul>
+<li>Double click on parameter <strong>firstname</strong> to display <strong>Distribution of Anomalies</strong> and <strong>Anomaly Strictness Level</strong>.</li>
+</ul>
+<p>Here you have the option to manually override the sample collections and perform sample testing.</p>
+<p><img alt="" src="../img/fwb-ws-ml-basic-hmm.png" /></p>
+<p><img alt="" src="../img/fwb-ws-ml-front-stage.png" /></p>
+<p><strong>NOTE</strong>: At this stage Machine Learning is protecting the web application.</p>
+<p>The web request generator should still be running up to 3.000 requests. After it finished observe again the <strong>firstname</strong> parameter and notice that background learning strengthen the mathematical model. <br />
+This can be observed on the <strong>Events-tab</strong>.</p>
+<pre><code class="language-script">-------------------------------------------------------------------------------
+       FortiDemo Machine Learning Anomaly Detection request generator
+ ------------------------------------------------------------------------------
+
+  1 - 3.000 POST requests - normal field input (learn)
+  2 - 3.000 POST requests - random field input (relearn)
+  3 -     1 POST request  - XSS on Lastname field (known attack - Signatures)
+  4 -     1 POST request  - Exploit on Lastname field (zero day command-injection attack - Machine Learning)
+  5 -     1 POST request  - Exploit on City field (zero day SQLi attack - Machine Learning)
+
+  9 -     Custom request  - Send custom request method, count, data, parameter etc
+
+  q - Exit
+
+Enter choice [ 1 - 9] 1
+
+Started: Fri May 15 10:36:34 UTC 2020
+Requests : 100 200 300 400 500 600 700 800 900 1000 1100 1200 1300 1400 1500 1600 1700 1800 1900 2000 2100 2200 2300 2400 2500 2600 2700 2800 2900 3000
+Ended    : Fri May 15 10:50:31 UTC 2020
+
+Press [Enter] key to continue...
+
+</code></pre>
+<p><img alt="" src="../img/fwb-ws-ml-basic-hmm-detail.png" /></p>
+<hr />
+<h3 id="5-attack-finance-bank-website">5. Attack Finance Bank website</h3>
+<p>Now the finance website is protected with Machine Learning, repeat the zero-day attacks that previsously passed through (Fales Negative)</p>
+<p><img alt="" src="../img/fwb-ws-ml-basic-both-zattacks.png" /></p>
+<p>Both "zero day" attacks are now blocked. </p>
+<p><img alt="" src="../img/fwb-ws-ml-basic-blockpage.png" /></p>
+<p>The attack log can be viewed to get detailed information about the attacks.</p>
+<p><img alt="" src="../img/fwb-ws-ml-basick-attacklog1.png" /></p>
+<p><img alt="" src="../img/fwb-ws-ml-basick-attacklog2.png" /></p>
+<p>This workshop is now complete.</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../fwb-machinelearning-bot-basic/" class="btn btn-neutral float-right" title="Demo - Bot Detection">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../setup/" class="btn btn-neutral" title="Preparation (mandatory)"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+      <p>© Fortinet</p>
+    
+  </div>
+
+  Provided by CSE-team International.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../setup/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../fwb-machinelearning-bot-basic/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,1159 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <meta name="author" content="fkemps@fortinet.com">
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Lab - Anomaly Detection - FortiWeb Machine Learning</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../css/theme.css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Lab - Anomaly Detection";
+    var mkdocs_page_input_path = "fwb-machinelearning-advanced.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> FortiWeb Machine Learning</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="..">Introduction</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../fwb-machinelearning-refresh/">Info - Machine Learning</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../setup/">Preparation (mandatory)</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../fwb-machinelearning-basic/">Demo - Anomaly Detection</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../fwb-machinelearning-bot-basic/">Demo - Bot Detection</a>
+                    </li>
+                </ul>
+                <ul class="current">
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Lab - Anomaly Detection</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#1-lab-scope">1. Lab Scope</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#2-configuration-setup">2. Configuration Setup</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#21-enable-packet-and-ml-logging">2.1 Enable Packet and ML logging</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#22-enable-machine-learning">2.2 Enable Machine Learning</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#23-machine-learning-cli-settings">2.3 Machine Learning CLI settings</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#24-anomaly-detection-settings">2.4. Anomaly Detection Settings</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#3-attack-application">3. Attack Application</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#4-build-machine-learning-model">4. Build Machine Learning Model</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#41-sample-test">4.1 Sample Test</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#5-application-changes">5. Application Changes</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#51-controlled-change">5.1 Controlled Change</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#511-sample-test">5.1.1 Sample Test</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#52-uncontrolled-change-date">5.2 Uncontrolled Change Date</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#521-sample-test">5.2.1 Sample Test</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#53-uncontroled-change-email">5.3 Uncontroled Change Email</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#6-manual-configuration">6. Manual Configuration</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#61-strictness-level">6.1 Strictness Level</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#62-noisy-samples">6.2 Noisy Samples</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../fwb-machinelearning-api/">Lab - API Protection</a>
+                    </li>
+                </ul>
+      </div>
+      <div class="navcenterfabric">
+        <img src="../img/fabric-small.png">
+      </div>
+      <div class="navcenter">
+        <img src="../img/fortinetlogonav.png">
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">FortiWeb Machine Learning</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Lab - Anomaly Detection</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="machine-learning-anomaly-detection">Machine Learning - Anomaly Detection.</h1>
+<h2 id="1-lab-scope">1. Lab Scope</h2>
+<p>The scope of the workshop is to configure and gain more in-depth understand of <strong>Machine Learning - Anomaly Detection</strong>.  <br />
+Anomaly Detection is all about input validation of data entered into the web application. Protecting against data leakage or exploitation of the web appliction or the server.      </p>
+<p>In this exercice we will simulate a customer situation in which we will cover both controlled and uncontrolled web application changes. In other words, the application is changed with and without notifying the WAF administrator about the web application changes.<br />
+This will give insights into how FWB will automatically adapt to and adjust the machine learning protection. <br />
+During this lab the web application will only be protected by Machine Learning - Anomaly Detection.</p>
+<p>The following sequencial steps will be performed to configure, simulate, and validate the protection provided by Machine Learning - Anomaly Detection.</p>
+<ul>
+<li>Access and attack the unprotected web application</li>
+<li>Enable Machine Learning - Anomaly Detection</li>
+<li>Auto-learn the mathematical protection model and re-attack the application, validate protection</li>
+<li>Perform a controlled application change, validate protection</li>
+<li>Perform an uncontrolled appliation chage, validate protection</li>
+<li>Manually adjust ML-AD configuration to increase security strictness</li>
+</ul>
+<p>During the exercise we will use web application <strong>http://finance.fortinet.demo/</strong> and only the <strong>Firstname</strong> input field of the form. <br />
+(You can use any of the other form fields to repeat or try different scenarios youself)</p>
+<h2 id="2-configuration-setup">2. Configuration Setup</h2>
+<p><h7 style="color:red;">NOTE: Make sure you have done the "Preparation (mandarory)" first, to complete the environment setup! <br />
+NOTE: Make sure Machine Learning - Bot Detection is in "Stop" state!</h7></p>
+<p>Then environmnet is already partly configured and we walk you through it.</p>
+<h4 id="21-enable-packet-and-ml-logging">2.1 Enable Packet and ML logging</h4>
+<p>To log the packet content and retain packet payload for machine learning events, it was enabled for logging.</p>
+<ul>
+<li>Log&amp;Report &gt; Log Config &gt; Other Log Settings</li>
+<li>Enable Traffic Packer log: <strong>Enable</strong></li>
+<li>Machine Learning: <strong>Enable</strong></li>
+<li>Apply</li>
+</ul>
+<p><img alt="" src="../img/fwb-ws-ml2.png" /></p>
+<h4 id="22-enable-machine-learning">2.2 Enable Machine Learning</h4>
+<p>Machine Learning can be enabled on a per Server Policy basis and already enabled for the Finance application.</p>
+<ul>
+<li>Policy &gt; Server Policy &gt; <strong>Finance</strong><ul>
+<li>Web Protection Profile: <strong>&lt;blanc></strong> (Select blank if a profile is configured)</li>
+<li><strong>OK</strong> (Make sure you click OK to save, in case you needed to change profile selection.)</li>
+</ul>
+</li>
+</ul>
+<p><strong><em>The following steps were performed to enable Machine Learning Anomaly</em></strong> <br />
+<img alt="" src="../img/fwb-ws-ml-enable.png" /></p>
+<ul>
+<li>Allow sample collection for domain: <strong>finance.fortinet.demo</strong></li>
+<li>OK </li>
+</ul>
+<p><img alt="" src="../img/fwb-ws-mlp2.png" /></p>
+<p><strong><em>The pre-configured Server Policy should be as shown below</em></strong> <br />
+<img alt="" src="../img/fwb-ws-mlp1.png" />   </p>
+<h4 id="23-machine-learning-cli-settings">2.3 Machine Learning CLI settings</h4>
+<p>By default FortiWeb will apply logic to learn intelligently good web traffic and not from a single source IP but multiple unique source IP's. For the lab environment we needed to override this logic because we have only a single client.</p>
+<p><strong>Note</strong>: The following config changes are already pre-configured. You need to reapply them when you delete or recreated the Machine Learning - Anomaly Detection profile.</p>
+<pre><code>config waf machine-learning-policy
+ edit 1
+   set sample-limit-by-ip 0
+   set ip-expire-cnts 1
+end  
+</code></pre>
+<ul>
+<li>
+<p><em>sample-limit-by-ip</em> <strong>0</strong> (accept unlimited requests per source IP)</p>
+</li>
+<li>
+<p><em>ip-expire-cnts</em> <strong>1</strong> (minimal number of unique source IP-addresses)</p>
+</li>
+</ul>
+<h4 id="24-anomaly-detection-settings">2.4. Anomaly Detection Settings</h4>
+<p>The sensitivity level for this exercise, the "Strictness Level for Anomaly" is set to the default value 3 (Standard Deviation). After you finished the full exercise you could rerun the exercise and increase/decrease the level to observe different learning behavior.</p>
+<ul>
+<li>Machine Learning &gt; Machine Learning Policy &gt; Finance</li>
+</ul>
+<p><img alt="" src="../img/fwb-ws-ml-setting.png" /></p>
+<hr />
+<h2 id="3-attack-application">3. Attack Application</h2>
+<ul>
+<li>Browse <strong>http://finance.fortinet.demo/fwb/index.html</strong></li>
+</ul>
+<p><img alt="" src="../img/fwb-ws-ml-finance.png" /></p>
+<p><strong>Note: You can copy and past the samples from <em>AttackSamples.txt</em> file located on the Lubuntu Desktop</strong></p>
+<p>Submit following inputs in <em>firstname</em> field:</p>
+<ul>
+<li>&lt;script>alert&lt;/script></li>
+<li>'1 or 1=1</li>
+<li>xxxxxxx</li>
+<li>xxx.xxx@xxx.xxx</li>
+<li>Wed May 17 10:59:36 EDT 2006</li>
+<li>02 08 2010 09:44:57</li>
+<li>abc;$compress_message=gzcompress("hack message", %252012)</li>
+<li>1234567890</li>
+</ul>
+<p><img alt="" src="../img/fwb-ws-ml-submit-noise.png" /></p>
+<hr />
+<h2 id="4-build-machine-learning-model">4. Build Machine Learning Model</h2>
+<p><code>./FortiDemo-ML-AD-traffic.sh</code></p>
+<ul>
+<li>Enter choice: <strong>9</strong></li>
+<li>Amount of requests: <strong>3000</strong></li>
+<li>URL: <strong>http://finance.fortinet.demo/fwb/index.html</strong></li>
+<li>Method: <strong>POST</strong></li>
+<li>Parameter name: <strong>firstname</strong></li>
+<li>Parameter type: <strong>email</strong></li>
+</ul>
+<p><img alt="" src="../img/fwb-ws-ml-requestemail.png" /></p>
+<p>If you're fast enough you will see the auto learning of the application tree and input fields, together with the status.</p>
+<p><img alt="" src="../img/fw-ws-ml-collecting.png" /></p>
+<p>Just after a few seconds (~20) you will notice that Machine Learning switched from <strong>Collecting</strong> to <strong>Running</strong> mode, and protects the <strong>Firstname</strong> field.</p>
+<p><img alt="" src="../img/fwb-ws-ml-email1stmodel.png" /></p>
+<p>Machine Learning will keep learning after being in Running mode and adjust the mathimatical model based on additional requests received. <br />
+The second Collecting, Building and Running phase happened with this exercise after approax 2 minutes. You can notice the differences on the Distribution of Anomalies and Anomaly Strictness graphs.</p>
+<p><img alt="" src="../img/fwb-ws-ml-email2ndmodel.png" /></p>
+<p>Now the mathimatical model for anomaly detection is created, fwb flags some of the initial attacks we send as "Noisy Sampes" because they deviate to much from the model.</p>
+<p><img alt="" src="../img/fwb-ws-ml-emailnoisy.png" /></p>
+<h3 id="41-sample-test">4.1 Sample Test</h3>
+<p>We can validate input samples to see which will be recognized as normal and anomaly inputs. this can be done throught the "<strong>Test Sample</strong>" button. <br />
+Run again through all the input values to see which are marked as <strong>Normal</strong> or <strong>Anomaly</strong>.
+We are going to repeate this step later after the controlled and uncontrolled web site changes as well.</p>
+<p><img alt="" src="../img/fwb-ws-ml-sampletest.png" /></p>
+<table>
+<thead>
+<tr>
+<th>Input</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>&lt;script>alert&lt;/script></td>
+<td>Anomaly</td>
+</tr>
+<tr>
+<td>'1 or 1=1</td>
+<td>Anomaly</td>
+</tr>
+<tr>
+<td>xxxxxxx</td>
+<td><strong>Normal</strong></td>
+</tr>
+<tr>
+<td>xxx.xxx@xxx.xxx</td>
+<td><strong>Normal</strong></td>
+</tr>
+<tr>
+<td>Wed May 17 10:59:36 EDT 2006</td>
+<td>Anomaly</td>
+</tr>
+<tr>
+<td>02 08 2010 09:44:57</td>
+<td>Anomaly</td>
+</tr>
+<tr>
+<td>abc;$compress_message=gzcompress("hack message", %252012)</td>
+<td>Anomaly</td>
+</tr>
+<tr>
+<td>1234567890</td>
+<td>Anomaly</td>
+</tr>
+</tbody>
+</table>
+<p> </p>
+<p>The Firstname form field was learned to have an email format like input, not strict but email alike. </p>
+<hr />
+<h2 id="5-application-changes">5. Application Changes</h2>
+<p>In this section we will examine how FortiWeb handles web application changes.<br />
+This will be done by learning different input formats, simulating controlled and uncontrolled web application changes. </p>
+<p><h7 style="color:red;">NOTE: The minimum amount af time between rebuilding the mathimatical models is 15min. <br />
+This can be increased up to 1440 mine per CLI (set renovate-short-time), but not lower then 15 minutes. Make sure that there's at least 15min inbetween finishing and starting the next generated traffic requests!</h7></p>
+<h3 id="51-controlled-change">5.1 Controlled Change</h3>
+<p>The web developer indicated that the <strong>Firstname" input field changed to numeric input and would like to have this change adopted by the WAF administrator. <br />
+This can do this by manually </strong>Rebuilding** the firstname parameter. This will drop the mathematical model and start the learning fresh.</p>
+<p><img alt="" src="../img/fwb-ws-ml-controlledrebuild.png" /></p>
+<p><img alt="" src="../img/fwb-ws-ml-firstnamerebuild.png" /></p>
+<p>Next we generate web request to relearn the Firstname input field and create a new mathematical model to detect anomalies. This step could be done explicitly by the developer or just by taking user input.</p>
+<p><code>./FortiDemo-ML-AD-traffic.sh</code></p>
+<ul>
+<li>Enter choice: <strong>9</strong></li>
+<li>Amount of requests: <strong>3000</strong></li>
+<li>URL: <strong>http://finance.fortinet.demo/fwb/index.html</strong></li>
+<li>Method: <strong>POST</strong></li>
+<li>Parameter name: <strong>firstname</strong></li>
+<li>Parameter type: <strong>number-small</strong></li>
+</ul>
+<p><img alt="" src="../img/fwb-ws-ml-requestnumbers.png" /></p>
+<p><img alt="" src="../img/fwb-ws-ml-number1stmodel.png" /></p>
+<p>Let is run into the 2nd model after receiving the 3000 requests. <br />
+Notice there are no more <strong>Noisy Samples</strong> which were there previously.</p>
+<p><img alt="" src="../img/fwb-ws-ml-number2ndmodel.png" /></p>
+<h3 id="511-sample-test">5.1.1 Sample Test</h3>
+<p>Time to repeat the <strong>Sample Test</strong> on the newly created mathimatical model.</p>
+<table>
+<thead>
+<tr>
+<th>Input</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>&lt;script>alert&lt;/script></td>
+<td>Anomaly</td>
+</tr>
+<tr>
+<td>'1 or 1=1</td>
+<td>Anomaly</td>
+</tr>
+<tr>
+<td>xxxxxxx</td>
+<td>Anomaly</td>
+</tr>
+<tr>
+<td>xxx.xxx@xxx.xxx</td>
+<td>Anomaly</td>
+</tr>
+<tr>
+<td>Wed May 17 10:59:36 EDT 2006</td>
+<td>Anomaly</td>
+</tr>
+<tr>
+<td>02 08 2010 09:44:57</td>
+<td>Anomaly</td>
+</tr>
+<tr>
+<td>abc;$compress_message=gzcompress("hack message", %252012)</td>
+<td>Anomaly</td>
+</tr>
+<tr>
+<td>1234567890</td>
+<td><strong>Normal</strong></td>
+</tr>
+</tbody>
+</table>
+<p> </p>
+<p>It becomes clear that the firstname field no longer considers an email like format to be normal and send it to the second phase (SVM) to detect if the inpyt is malicious.</p>
+<h3 id="52-uncontrolled-change-date">5.2 Uncontrolled Change Date</h3>
+<p>Next step is to simulate the uncontrolled change by allowing a long date notation format into the application.</p>
+<p><code>./FortiDemo-ML-AD-traffic.sh</code></p>
+<ul>
+<li>Enter choice: <strong>9</strong></li>
+<li>Amount of requests: <strong>3000</strong></li>
+<li>URL: <strong>http://finance.fortinet.demo/fwb/index.html</strong></li>
+<li>Method: <strong>POST</strong></li>
+<li>Parameter name: <strong>firstname</strong></li>
+<li>Parameter type: <strong>date-long</strong></li>
+</ul>
+<p><img alt="" src="../img/fwb-ws-ml-requestlongdate.png" /></p>
+<p>The Firstname parameter will remain in <strong>Running</strong> state while detecting the application change. Moves shortly from <strong>Building</strong> to Running state once the new mathimatical model is generated.</p>
+<p><img alt="" src="../img/fwb-ws-ml-firstnameinrunning.png" /></p>
+<p><img alt="" src="../img/fwb-ws-ml-rebuildlongdate1stmodel.png" /></p>
+<p><img alt="" src="../img/fwb-ws-ml-rebuildlongdate2ndmodel.png" /></p>
+<h3 id="521-sample-test">5.2.1 Sample Test</h3>
+<table>
+<thead>
+<tr>
+<th>Input</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>&lt;script>alert&lt;/script></td>
+<td>Anomaly</td>
+</tr>
+<tr>
+<td>'1 or 1=1</td>
+<td>Anomaly</td>
+</tr>
+<tr>
+<td>xxxxxxx</td>
+<td><strong>Normal</strong></td>
+</tr>
+<tr>
+<td>xxx.xxx@xxx.xxx</td>
+<td>Anomaly</td>
+</tr>
+<tr>
+<td>Wed May 17 10:59:36 EDT 2006</td>
+<td><strong>Normal</strong></td>
+</tr>
+<tr>
+<td>02 08 2010 09:44:57</td>
+<td><strong>Normal</strong></td>
+</tr>
+<tr>
+<td>abc;$compress_message=gzcompress("hack message", %252012)</td>
+<td>Anomaly</td>
+</tr>
+<tr>
+<td>1234567890</td>
+<td><strong>Normal</strong></td>
+</tr>
+</tbody>
+</table>
+<p> </p>
+<p>Due to the automatic relearning and rebuilding of the mathematical model, it merged the <strong>Number</strong> and <strong>Date</strong> format to match the model. Those inputs will be passed on to the web application without being send to the 2nd Machine Learning phase (SVM) for malicious detection.</p>
+<h3 id="53-uncontroled-change-email">5.3 Uncontroled Change Email</h3>
+<p><code>./FortiDemo-ML-AD-traffic.sh</code></p>
+<ul>
+<li>Enter choice: <strong>9</strong></li>
+<li>Amount of requests: <strong>3000</strong></li>
+<li>URL: <strong>http://finance.fortinet.demo/fwb/index.html</strong></li>
+<li>Method: <strong>POST</strong></li>
+<li>Parameter name: <strong>firstname</strong></li>
+<li>Parameter type: <strong>email</strong></li>
+</ul>
+<p><img alt="" src="../img/fwb-ws-ml-rebuildemailuncontrolled.png" /></p>
+<table>
+<thead>
+<tr>
+<th>Input</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>&lt;script>alert&lt;/script></td>
+<td>Anomaly</td>
+</tr>
+<tr>
+<td>'1 or 1=1</td>
+<td>Anomaly</td>
+</tr>
+<tr>
+<td>xxxxxxx</td>
+<td><strong>Normal</strong></td>
+</tr>
+<tr>
+<td>xxx.xxx@xxx.xxx</td>
+<td><strong>Normal</strong></td>
+</tr>
+<tr>
+<td>Wed May 17 10:59:36 EDT 2006</td>
+<td><strong>Normal</strong></td>
+</tr>
+<tr>
+<td>02 08 2010 09:44:57</td>
+<td><strong>Normal</strong></td>
+</tr>
+<tr>
+<td>abc;$compress_message=gzcompress("hack message", %252012)</td>
+<td>Anomaly</td>
+</tr>
+<tr>
+<td>1234567890</td>
+<td><strong>Normal</strong></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="6-manual-configuration">6. Manual Configuration</h2>
+<h3 id="61-strictness-level">6.1 Strictness Level</h3>
+<p>The FortiWeb administrator can manually adjust a few parameters. <br />
+The <strong>Strictness Level for Anomaly</strong> for example. This allows the input to validate the input less or more exactly matching the model and by that sending more or less traffic for malicious inspection by SVM.</p>
+<p>If we set the latest learned model to strictness level 1, we will notice that xxx.xxx@xxx.xxx will not be seen as normal input anymore.</p>
+<p><img alt="" src="../img/fwb-ws-ml-anomalystrictness.png" /></p>
+<table>
+<thead>
+<tr>
+<th>Input</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>&lt;script>alert&lt;/script></td>
+<td>Anomaly</td>
+</tr>
+<tr>
+<td>'1 or 1=1</td>
+<td>Anomaly</td>
+</tr>
+<tr>
+<td>xxxxxxx</td>
+<td><strong>Normal</strong></td>
+</tr>
+<tr>
+<td>xxx.xxx@xxx.xxx</td>
+<td><h7 style="color:red;">Anomaly</h7></td>
+</tr>
+<tr>
+<td>Wed May 17 10:59:36 EDT 2006</td>
+<td><strong>Normal</strong></td>
+</tr>
+<tr>
+<td>02 08 2010 09:44:57</td>
+<td><strong>Normal</strong></td>
+</tr>
+<tr>
+<td>abc;$compress_message=gzcompress("hack message", %252012)</td>
+<td>Anomaly</td>
+</tr>
+<tr>
+<td>1234567890</td>
+<td><strong>Normal</strong></td>
+</tr>
+</tbody>
+</table>
+<p> </p>
+<h3 id="62-noisy-samples">6.2 Noisy Samples</h3>
+<p>In case there is specific input that violates the policy, or in the rare case of False Negative, then there is an option to manually add <strong>Additional Samples</strong> to the mathimatical model.</p>
+<p>Let us add two additional samples and test them on anomaly detection (HMM).</p>
+<p><img alt="" src="../img/fwb-ws-ml-noisysample.png" /></p>
+<p>Restesting the input via the Sample Test now shows it is marked as <strong>Normal</strong> input.</p>
+<p><img alt="" src="../img/fwb-ws-ml-noisysampledebug.png" /></p>
+<!---
+
+Content below this line is for reuse and/or has to be moved elsewhere
+--- 
+
+### Previous content
+
+###Learn e-mail based model
+
+Step 1 of 2: building a model based on <h7 style="color:red;">e-mail address</h7> input type.
+
+  * Test Goal: send valid+noise+anomaly+attack mixed traffic.
+
+  * Expected Result: Machine Learning to Detect, Block & Log relevant traffic.
+
+
+
+###Rebuild small-number based model
+
+Step 2 of 2: Manually rebuild the model based on <h7 style="color:red;">small numbers</h7> format as NEW input type.   
+After that will trigger *auto-rebuild* based on <h7 style="color:red;">long-date</h7> format as NEW input type
+
+  * Test Goal: run traffic with **NEW** type of parameter.
+
+  * Expected Result: 
+   1. Manually forcing Machine Learning to rebuild its model according to the **NEW** type of parameter inputs(<h7 style="color:red;">number-small</h7>).
+   2. Machine Learning to **auto-rebuild** its model according to the **NEW** type of parameter inputs(<h7 style="color:red;">date-long</h7>).
+
+
+
+
+  * Test: run traffic with **ADDITIONAL** type of parameter.
+
+  * Expected Result: Machine Learning to **relearn** its model by keeping previous samples and merging them with additional **ADDITIONAL** type of parameter inputs.
+
+
+
+
+**Please read following REMINDERS if not seen before.**
+
+***Then, run following A, B, C steps below in the right order.***
+
+* A. Configuration Setup.
+* B. Step 1/2: building a model based on EMAIL input type.
+* C. Step 2/2: re-building the model based on SHORT date format input type.
+
+
+---      
+<!--###Reminders
+
+The two Levels Processing FortiWeb Machine Learning for Anomaly Detection are:
+
+ * Level1: HMM for **Anomaly Detection** (Hidden Markov Model)
+ * Level2: SVM for **Attack Identification** (Support Vector Machine)
+
+**Reminder 1.** Why Machine Learning for Anomaly Detection in WAF
+
+![](img/fwb-ws-ml-why.png)
+
+**Reminder 2.** FortiWeb AI-Machine Learning is the last level of mitigation for Unknown Application Attacks
+
+![](img/fwb-ws-features-pyramid.png)
+
+**Reminder 3.** Why  FortiWeb runs two LAYERS of AI-Machine Learning
+
+![](img/fwb-ws-ml-2layers.png)
+
+**Reminder 4.** FortiWeb AI-Machine Learning HMM LAYER1 for Anomaly Detection.
+
+![](img/fwb-ws-ml-hmmlayer.png)
+
+**Reminder 5.** FortiWeb AI-Machine Learning SVM LAYER2 for Attack Detection.
+
+![](img/fwb-ws-ml-svmlayer.png)
+
+**Reminder 6.** Machine Learning PHASE1: Model Building & Anomaly Scoring.
+
+![](img/fwb-ws-ml-phase1.png)
+
+**Reminder 7.** Machine Learning PHASE2: Scoring Distribution Results.
+
+![](img/fwb-ws-ml-phase2.png)
+
+**Reminder 8.** Machine Learning PHASE3: Specific Cases SIGMA tuning.
+
+![](img/fwb-ws-ml-phase3.png)
+
+**Reminder 9.** Machine Learning PHASE4: Application Change Detection.
+
+![](img/fwb-ws-ml-boxplot1.png)
+![](img/fwb-ws-ml-boxplot1-2.png)
+
+--- 
+
+
+Let's now check the configuration and run following tests.
+
+* A. Configuration Setup.
+* B. Step 1/2: building a model based on username@domain.com USERNAME input type.
+* C. Step 2/2: re-building the model based on LONG date format input type.
+
+
+###A. Configuration Setup
+
+
+
+
+--- 
+###B. E-mail address input
+
+Step 1/2: Building a model based on <h7 style="color:red;">e-mail address</h7> input type.
+
+  * Test Goal: send valid+noise+anomaly+attack mixed traffic.
+
+  * Expected Result: Machine Learning to Detect, Block & Log relevant traffic.
+
+
+
+
+####B.1. Parameter Building
+
+#####B.1.1. Launch Traffic Generator Script from Lubuntu Client in order to send ==email== format inputs to the web application
+
+`./FortiDemo-ML-AD-traffic.sh`
+
+* Enter choice: **9**
+* Amount of requests: **3000**
+* URL: **http://finance.fortinet.demo/fwb/index.html**
+* Method: **POST**
+* Parameter name: **firstname**
+* Parameter type: **email**
+
+![](img/fwb-ws-ml-request1.png)
+
+
+#####B.1.2. Manually Submit some POST with non-regular inputs **before** model status is in Running stage
+
+* Browse **http://finance.fortinet.demo/fwb/index.html**
+
+**Note: You can copy and past the samples from *AttackSamples.txt* file located on the Lubuntu Desktop**
+
+* Submit following inputs in *firstname* field:
+
+ * \<script\>alert\</script\>
+ * 1 or 1=1
+ * xxxxxxx
+ * xxx.xxx@xxx.xxx
+ * Wed May 17 10:59:36 EDT 2006
+ * 02 08 2010 09:44:57
+ * abc;$compress_message=gzcompress("hack message", 12)
+
+![](img/fwb-ws-ml-submit-noise.png)
+
+
+* Check Attack Log if you get blocked.
+* Analyze Attack Log.
+
+
+
+#####B.1.3. Check *firstname*  HMM Learning Stage changes under Tree View until *firstname* is on running stage
+
+**Collecting**
+![](img/fwb-ws-ml-stage-collect-fn.png)
+
+**Testing**
+![](img/fwb-ws-ml-stage-test-fn.png)
+
+**Running**
+![](img/fwb-ws-ml-stage-running-fn.png)
+
+
+
+#####B.1.4. Manually re-Submit same POST with non-regular inputs when model status is in Running stage
+
+* Browse **http://finance.fortinet.demo/fwb/index.html**
+
+**Note: You can copy and past the samples from *AttackSamples.txt* file located on the Lubuntu Desktop**
+
+* Re-Submit same inputs in *firstname* field:
+
+ * <script\>alert</script\>
+ * 1 or 1=1
+ * /%3F%3F%3F/1%3F - /???/1?
+ * xxx.xxx@xxx.xxx
+ * Wed May 17 10:59:36 EDT 2006
+ * 02 08 2010 09:44:57
+ * abc;$compress_message=gzcompress("hack message", 12)
+
+![](img/fwb-ws-ml-submit-noise.png)
+
+* Check Attack Log if you get blocked.
+* Analyze Attack Log.
+
+![](img/fwb-ws-ml-block1.png)
+
+![](img/fwb-ws-ml-attacklog1.png)
+
+![](img/fwb-ws-ml-attack1-fn.png)
+
+####B.2. Exceptions
+
+Create Exceptions in order to white list some non-regular inputs
+
+
+* Create Exceptions for some inputs in *firstname* field
+     * abc;$compress_message=gzcompress("hack message", 12)
+
+![](img/fwb-ws-ml-param-exception.png)
+
+* Browse **http://finance.fortinet.demo/fwb/index.html**
+* Re-submit ***abc;$compress_message=gzcompress("hack message", 12)*** again, they should **NOT** be blocked.
+
+
+**Please have *ALL* the additional samples deleted before moving to the next excercise!**
+
+* Machine Learning > Anomaly Detection > Finance
+* Double click on **finance.fortinet.demo** (or hamburger menu) > Parameter View
+* *firstname* > Additional Samples
+
+![](img/fwb-ws-ml-delete-sample.png)
+
+
+
+####B.3. Adjust Strictness
+
+Change Strictness Level for Anomaly in order to accept stricter samples for the model.
+
+#####B.3.1. Launch Traffic Generator Script from Lubuntu Client in order to send ==email== format inputs to the web application
+
+`./FortiDemo-ML-AD-traffic.sh`
+
+* Enter choice: **9**
+* Amount of requests: **3000**
+* URL: **http://finance.fortinet.demo/fwb/index.html**
+* Method: **POST**
+* Parameter name: **firstname**
+* Parameter type: **email**
+
+![](img/fwb-ws-ml-request1.png)
+
+#####B.3.2. Change Stricness Level for Anomaly
+
+* Machine Learning > Anomaly Detection > Finance
+* Double click on **finance.fortinet.demo** (or hamburger menu) > Parameter View
+* *firstname* > Change Custom Sigma to **1**
+* See new Anomaly Strictness graph.
+* See new Anomaly Samples.
+
+![](img/fwb-ws-ml-adjust-sigma.png)
+
+* Test one of the Amomaly Samples.
+
+![](img/fwb-ws-ml-test-anomalysample.png)
+
+
+
+####B.4. Noisy Samples Test
+
+Select and test some of the Noisy Samples
+
+Noisy Samples are not participating to model building.
+
+**Note: This is to be done on the http://finance.fortinet.demo/fwb/index.html page not on the FortiWeb.**
+
+* Select some of the Noisy Samples
+* Submit them in *firstname* parameter
+* Check the Log
+
+![](img/fwb-ws-ml-test-noisysample.png)
+
+On the Finance Application, there is no impact on the Noisy Sample being submitted as they don't contain any threat. 
+
+
+--- 
+
+###C. Manual rebuild
+
+Step 2/2: Manually re-building the model based on <h7 style="color:red;">number-small</h7> format as NEW input type. Then trigger auto-rebuild based on <h7 style="color:red;">date-long</h7> format as NEW input type.
+
+  * Test Goal: run traffic with **NEW** type of parameter.
+
+  * Expected Result: 
+   1. Manually forcing Machine Learning to rebuild its model according to the **NEW** type of parameter inputs(==number-small==).
+   2. Machine Learning to **auto-rebuild** its model according to the **NEW** type of parameter inputs(==date-long==).
+
+
+
+####C.1. Manual Parameter Rebuilding
+
+#####C.1.1. Manually forcing Paramerter Rebuild
+* Machine Learning > Anomaly Detection > Finance
+* Double click on **finance.fortinet.demo** (or hamburger menu) > Parameter View
+* *firstname* > Operation > **Rebuild Parameter**
+* OK
+
+![](img/fwb-ws-ml-manual-rebuild.png)
+
+Notice the manual **Rebuild Parameter** will remove *firstname* parameter and you can see it on the tree view, *firstname* parameter is no longer listed.
+
+![](img/fwb-ws-ml-manual-rebuild2.png)
+
+
+#####C.1.2. Launch Traffic Generator Script from Lubuntu Client in order to send ==number-small== format inputs to the web application
+
+`./FortiDemo-ML-AD-traffic.sh`
+
+ * Enter choice: **9**
+ * Amount of requests: **3000**
+ * URL: **http://finance.fortinet.demo/fwb/index.html**
+ * Method: **POST**
+ * Parameter name: **firstname**
+ * Parameter type: **number-small**
+
+![](img/fwb-ws-ml-request2.png)
+
+
+#####C.1.3. Check *firstname* HMM Learning Stage changes under Tree View until *firstname* is on running stage
+
+**Running**
+
+![](img/fwb-ws-ml-firstname-running.png)
+
+
+#####C.1.4. Check Parameter View details for just rebuilt *firstname* model
+
+
+![](img/fwb-ws-ml-firstname-rebuild.png)
+
+
+#####C.1.5 Manually test some ==number-small==, ==email== and ==dates== samples into *firstname* field
+
+**Note: You can copy and past the samples from *AttackSamples.txt* file located on the Lubuntu Desktop**
+
+* Submit **12345678**
+* Submit **YgX5M5fzgw@TNd3jawkWUC.jTPm**
+* Submit **02 08 2010 09:44:57**
+* Submit **Wed May 17 10:59:36 EDT 2006**
+
+![](img/fwb-ws-ml-firstname-manualtest.png)
+
+Notice that all 4 samples are submmited successfully. From user point of view there is no difference.
+
+Now do the same test but this time on the FortiWeb
+
+* Machine Learning > Machine Learning Policy > Finance > Parameter View
+* *firstname* > Test Sample
+
+**12345678**
+
+![](img/fwb-ws-ml-numbersmall-normal.png)
+
+**YgX5M5fzgw@TNd3jawkWUC.jTPm**
+
+![](img/fwb-ws-ml-email-anomaly.png)
+
+**02 08 2010 09:44:57**
+
+![](img/fwb-ws-ml-dateshort-anomaly.png)
+
+**Wed May 17 10:59:36 EDT 2006**
+
+![](img/fwb-ws-ml-datelong-anomaly.png)
+
+* Only **number** input will be rated as **Normal**, other input formats will be rated as **Anomaly**
+
+####C.2 Auto-rebuild trigger
+
+Triggering auto-rebuild with <h7 style="color:red;">date-long</h7> new Input
+
+#####C.2.1. Launch Traffic Generator Script from Lubuntu Client in order to send ==date-long== format inputs to the web application
+
+`./FortiDemo-ML-AD-traffic.sh`
+
+ * Enter choice: **9**
+ * Amount of requests: **5000**
+ * URL: **http://finance.fortinet.demo/fwb/index.html**
+ * Method: **POST**
+ * Parameter name: **firstname**
+ * Parameter type: **date-long**
+
+![](img/fwb-ws-ml-request3.png)
+
+* *firstname* parameter will be changin it's state from Running -> Collecting -> Building -> Testing -> Running
+
+* This is done automatically and you can verify this on the Event tab when firstname parameter is at **Running** state
+
+![](img/fwb-ws-ml-boxplot-rebuild.png)
+
+
+#####C.2.2 Manually test some ==number-small==, ==email== and dates samples into *firstname* field
+
+**Note: You can copy and past the samples from *AttackSamples.txt* file located on the Lubuntu Desktop**
+
+* Submit **12345678**
+* Submit **YgX5M5fzgw@TNd3jawkWUC.jTPm**
+* Submit **02 08 2010 09:44:57**
+* Submit **Wed May 17 10:59:36 EDT 2006**
+
+![](img/fwb-ws-ml-firstname-manualtest.png)
+
+Notice that all 4 samples are submmited successfully. From user point of view there is no difference.
+
+Now do the same test but this time on the FortiWeb
+
+* Machine Learning > Machine Learning Policy > Finance > Parameter View
+* *firstname* > Test Sample
+
+**12345678**
+
+![](img/fwb-ws-ml-numbersmall-anomaly.png)
+
+**YgX5M5fzgw@TNd3jawkWUC.jTPm**
+
+![](img/fwb-ws-ml-email-anomaly.png)
+
+**02 08 2010 09:44:57**
+
+![](img/fwb-ws-ml-dateshort-normal.png)
+
+**Wed May 17 10:59:36 EDT 2006**
+
+![](img/fwb-ws-ml-datelong-normal.png)
+
+
+* Only **Longdate** is rated as **Normal**, **Shortdate**, **numbers** and **email** are rated as **Anomaly**
+
+--- 
+
+###D. Step 3/3: Relearning the model based on ==number-small== format at the same time keeping exisiting model (==date-long==)
+
+
+
+* Test: run traffic with **ADDITIONAL** type of parameter.
+
+* Expected Result: Machine Learning to **relearn** its model by keeping previous samples and merging them with additional **ADDITIONAL** type of parameter inputs.
+
+
+
+####D.1. Parameter Re-Learning 
+
+#####D.1.1. Manually launch the Relearn Parameter on *firstname*
+
+* Machine Learning > Anomaly Detection > Finance
+* Double click on **finance.fortinet.demo** (or hamburger menu) > Parameter View 
+* *firstname* > Operation > **Relearn Parameter**
+* OK
+
+![](img/fwb-ws-ml-trigger-relearn-fn.png)
+
+*firname* parameter will change from Running Mode to Collection Mode after we manaully triggfer the relearn
+
+![](img/fwb-ws-ml-trigger-relearn-fn2.png)
+
+#####D.1.2. Launch Traffic Generator Script from Lubuntu Client in order to send ==number-small== format inputs to the web application
+
+
+
+`lubuntu@lubuntu:~$ cd ~`
+`lubuntu@lubuntu:~$ ./FortiDemo-ML-AD-traffic.sh`
+
+   * Enter choice: **9**
+   * Amount of requests: **3000**
+   * URL: **http://finance.fortinet.demo/fwb/index.html**
+   * Method: **POST**
+   * Parameter name: **firstname**
+   * Parameter type: **number-small**
+
+![](img/fwb-ws-ml-request4.png)
+
+
+#####D.1.3. Check *firstname* HMM Learning Stage changes under Tree View until *firstname* is on running stage
+
+![](img/fwb-ws-ml-firstname-running.png)
+
+#####D.1.4. Check Parameter View details for just relearned *firstname* model
+
+![](img/fwb-ws-ml-firstname-relearn2.png)
+
+
+####D.2. Manually test some ==number-small==, ==email== and ==dates== samples into *firstname* field
+
+
+**Note: You can copy and past the samples from *AttackSamples.txt* file located on the Lubuntu Desktop**
+
+* Submit **12345678**
+* Submit **YgX5M5fzgw@TNd3jawkWUC.jTPm**
+* Submit **02 08 2010 09:44:57**
+* Submit **Wed May 17 10:59:36 EDT 2006**
+
+![](img/fwb-ws-ml-firstname-manualtest.png)
+
+Notice that all 4 samples are submmited successfully. From user point of view there is no difference.
+
+Now we will do the same test but this time we wll do it on the FortiWeb
+
+* Machine Learning > Machine Learning Policy > Finance > Parameter View
+* *firstname* > Test Sample
+
+`12345678`
+
+![](img/fwb-ws-ml-numbersmall-normal2.png)
+
+`YgX5M5fzgw@TNd3jawkWUC.jTPm`
+
+![](img/fwb-ws-ml-eamil-anomaly2.png)
+
+`02 08 2010 09:44:57`
+
+![](img/fwb-ws-ml-dateshort-normal2.png)
+
+`Wed May 17 10:59:36 EDT 2006`
+
+![](img/fwb-ws-ml-datelong-normal2.png)
+
+
+* **Shortdate**, **Longdate** and **numbers** are rated as **NORMAL**
+* **Relearn Parameter will allow Machine Learning to keep existing model and at the same time  take in new samples and rebuild new HMM model based on the merger of the existing samples and new samples.** 
+
+-->
+<hr />
+<p><strong>SUMMARY</strong></p>
+<pre><code class="language-script">Legacy WAF
+:-( Negative Security: Signatures
+:-( Negative+Positive Security
+:-( Application Learning
+
+
+FortiWeb WAAP with Machine Learning
+
+Layer1: Anomaly Detection (HMM)
+Layer2: Attack Identification (SVM)
+
+:-) Detect ZERO DAYs
+:-) No False Positive / No False Negative
+:-) No possible EVASION
+:-) No Tuning (FP/FN/Application Change)
+
+</code></pre>
+<p>This workshop is now complete.</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../fwb-machinelearning-api/" class="btn btn-neutral float-right" title="Lab - API Protection">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../fwb-machinelearning-bot-basic/" class="btn btn-neutral" title="Demo - Bot Detection"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+      <p>© Fortinet</p>
+    
+  </div>
+
+  Provided by CSE-team International.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../fwb-machinelearning-bot-basic/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../fwb-machinelearning-api/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

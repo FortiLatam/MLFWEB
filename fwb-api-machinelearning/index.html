@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <meta name="author" content="fkemps@fortinet.com">
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Fwb api machinelearning - FortiWeb Machine Learning</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../css/theme.css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Fwb api machinelearning";
+    var mkdocs_page_input_path = "fwb-api-machinelearning.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> FortiWeb Machine Learning</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="..">Introduction</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../fwb-machinelearning-refresh/">Info - Machine Learning</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../setup/">Preparation (mandatory)</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../fwb-machinelearning-basic/">Demo - Anomaly Detection</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../fwb-machinelearning-bot-basic/">Demo - Bot Detection</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../fwb-machinelearning-advanced/">Lab - Anomaly Detection</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../fwb-machinelearning-api/">Lab - API Protection</a>
+                    </li>
+                </ul>
+      </div>
+      <div class="navcenterfabric">
+        <img src="../img/fabric-small.png">
+      </div>
+      <div class="navcenter">
+        <img src="../img/fortinetlogonav.png">
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">FortiWeb Machine Learning</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Fwb api machinelearning</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h2 id="fortiweb-api-protection">FortiWEB API Protection</h2>
+<p>FortiWeb secures API interfaces, whether they are implemented using XML, JSON API, or RESTful API. FortiWeb parses the contents of each call and applies WAF policy validation to protect the application from malicious traffic.</p>
+<ol>
+<li>
+<p><strong>XML</strong> is commonly used for data exchange. Hackers sometimes try to exploit security holes in XML code to attack web servers.</p>
+</li>
+<li>
+<p><strong>JSON</strong> is a lightweight data-interchange format, Attackers may try to exploit sensitive information in JSON code to attack web servers.</p>
+</li>
+<li>
+<p><strong>OpenAPI Specification (OAS)</strong> defines a standard, language agnostic interface to RESTful APIs, which allows both humans and computers to discover and understand the capabilities of the service without access to source code, documentation, or through network traffic inspection. When properly defined, you can understand and interact with the remote service with a minimal amount of implementation logic. OpenAPI is becoming a popular tool and the de-facto standard how APIs are described.</p>
+</li>
+<li>
+<p><strong>API Gateway</strong> provides the following functions: API user management, API key verification, API access control, Rate limit control, API call rewriting.</p>
+</li>
+<li>
+<p><strong>Mobile API:</strong> Mobile devices are increasing being used for accessing web servers. These applications are increasing being attacked and need protection.</p>
+</li>
+</ol>
+<h3 id="10-fortiweb-api-protection-machine-learning">1.0 FortiWEB API Protection (Machine Learning)</h3>
+<p>With the release of FortiWEB v7.0, API Protection (Machine Learning) was released.</p>
+<p>The machine learning based API Protection learns the REST API data structure from user traffic samples and then build a mathematical model to screen out malicious API requests.</p>
+<p>It analyzes the method, URL, and endpoint data of the API request samples to generate an API data structure file for your application. This file describes the URL pattern and schema of endpoint data. If the incoming API request violates the data structure, it will be detected as an attack.</p>
+<p><strong>API Protection supports JSON request body or responses.</strong></p>
+<h3 id="20-api-discovery">2.0 API Discovery</h3>
+<p>A successful REST API sample (request &amp; response) must follow the server’s API specification</p>
+<p>API discovery: restore the API specification from user traffic by profiling API samples.
+One key step in API discovery is to determine whether multiple API samples belong to the same API. 
+The API discovery problem can be formulated as an unsupervised learning problem which can be solved by clustering algorithms. </p>
+<p>We designed a new clustering algorithm, URL clustering with schema awareness, to solve the problem.  The algorithm can be considered as a variant of the well-known leader clustering algorithm. 
+Clustering is often used as a data analysis technique for discovering interesting patterns in data, such as grouping customers based on their behaviour.</p>
+<h3 id="21-api-10-dimensions-examined">2.1 API - 10 Dimensions examined</h3>
+<ol>
+<li>URL distance<ul>
+<li>Generalized Hamming distance for vectorized URLs</li>
+</ul>
+</li>
+<li>Path parameters<ul>
+<li>Schema of parameters in URL path</li>
+</ul>
+</li>
+<li>Query parameters<ul>
+<li>Schema of parameters appended to the URL. </li>
+</ul>
+</li>
+<li>Header parameters<ul>
+<li>Schema of parameters in custom headers</li>
+</ul>
+</li>
+<li>Cookie parameters<ul>
+<li>Schema of cookie values</li>
+</ul>
+</li>
+<li>HTTP request body<ul>
+<li>Schema of HTTP request body</li>
+</ul>
+</li>
+<li>HTTP method <ul>
+<li>Type of HTTP methods, eg., GET, SET, PUT, POST...</li>
+</ul>
+</li>
+<li>Media type<ul>
+<li>Type of media type, e.g., XML, JSON, etc. </li>
+</ul>
+</li>
+<li>HTTP status code<ul>
+<li>Only successful requests shall be used for model training</li>
+</ul>
+</li>
+<li>HTTP response body<ul>
+<li>Schema of response body</li>
+</ul>
+</li>
+</ol>
+<h3 id="22-high-level-architecture-and-system-components">2.2 High Level Architecture and System Components</h3>
+<ol>
+<li><strong>Preprocessing module:</strong>  extract user data schema,  construct API samples </li>
+<li><strong>Inference module:</strong> evaluate the API samples with pre-trained machine learning models, feed sample outliers to the model training module, generate security scores for API samples</li>
+<li><strong>Model training module:</strong> train ML models using our API profiling algorithm and send updates to the inference module</li>
+<li><strong>API protection module:</strong> determine following actions based on security scores and user API protection policies. </li>
+</ol>
+<p><img alt="" src="../img/fwb-api-ml-architecture.png" /></p>
+              
+            </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+      <p>© Fortinet</p>
+    
+  </div>
+
+  Provided by CSE-team International.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>
