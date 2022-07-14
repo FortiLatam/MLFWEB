@@ -6,6 +6,7 @@ RUN chown www-data:www-data -R /usr/share/nginx/html/
 
 EXPOSE 80
 
-RUN service nginx start
+STOPSIGNAL SIGTERM
+CMD ["nginx", "-g", "daemon off;"]
 
 ENTRYPOINT ["tail", "-f", "/dev/null"]
