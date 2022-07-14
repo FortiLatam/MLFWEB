@@ -1,6 +1,6 @@
 FROM nginx
 
-COPY . /usr/share/nginx/html/
+COPY . /usr/share/nginx/html
 
 RUN chown www-data:www-data -R /usr/share/nginx/html/
 
