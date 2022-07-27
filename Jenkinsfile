@@ -18,12 +18,12 @@ pipeline {
                  app = docker.build("mlfweb")
                 }
             }
-        }/*
+        }
         stage('CWP Scan'){
             steps {
                  fortiCWPScanner imageName: 'mlfweb:latest', block: true
             }
-        }
+        }/*
         stage('SAST'){
             steps {
                  sh 'docker pull registry.fortidevsec.forticloud.com/fdevsec_sast:latest'
