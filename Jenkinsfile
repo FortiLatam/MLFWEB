@@ -21,7 +21,7 @@ pipeline {
         }
         stage('CWP Scan'){
             steps {
-                 fortiCWPScanner imageName: 'mlfweb:latest', block: true
+                 fortiCWPScanner imageName: 'mlfweb:latest', block: false
             }
         }/*
         stage('SAST'){
